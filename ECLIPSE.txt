@@ -1,0 +1,180 @@
+public class MainActivity extends Activity {
+VideoView videoView;
+
+public void onCreate(Bundle savedInstanceState) {
+          super.onCreate(savedInstanceState);
+          requestWindowFeature(Window.FEATURE_NO_TITLE);
+          setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
+
+          this.setContentView(R.layout.activity_main);
+
+          videoView = (VideoView)this.findViewById(R.id.videoView1);
+
+          MediaController mc = new MediaController(this);
+          videoView.setMediaController(mc);
+
+          videoView.setVideoURI(Uri.parse("rtsp://192.168.3.142:554/live/myStream"));
+          videoView.start();
+
+          videoView.requestFocus();
+    }
+
+
+
+
+
+
+
+
+
+
+	ProgressDialog progress;
+
+
+           ProgressDialog.show(MainActivity.this, "", "Ã«— «· Õ„Ì· Ì—ÃÏ «·«‰ ÷«—");
+
+
+
+public void run()
+        {
+          progress.dismiss();
+        }
+
+
+
+
+
+
+
+
+
+
+
+
+
+    private long lastPressedTime;
+    private static final int PERIOD = 2000;
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (event.getKeyCode() == KeyEvent.KEYCODE_BACK) {
+            switch (event.getAction()) {
+            case KeyEvent.ACTION_DOWN:
+                if (event.getDownTime() - lastPressedTime < PERIOD) {
+                    finish();
+                } else {
+                    Toast.makeText(getApplicationContext(), "«÷€ÿ ⁄·Ï “— «·⁄Êœ… „—… À«‰Ì… ··Œ—ÊÃ „‰ «· ÿ»Ìﬁ",
+                            Toast.LENGTH_SHORT).show();
+                    lastPressedTime = event.getEventTime();
+                }
+                return true;
+            }
+        }
+        return false;
+    }
+    	 
+
+
+
+
+
+
+
+
+
+
+
+    <uses-sdk
+        android:minSdkVersion="8"
+        android:targetSdkVersion="17" />
+    
+        <uses-permission android:name="android.permission.INTERNET" />
+
+
+
+
+
+
+
+
+
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    tools:context=".MainActivity" >
+
+    <VideoView
+        android:id="@+id/videoView1"
+        android:layout_width="fill_parent"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentBottom="true"
+        android:layout_height="fill_parent" />
+
+</RelativeLayout>
+
+
+
+
+
+
+
+
+    private final int ID_MENU_EXIT = 1;
+
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item)
+    {
+    	//check selected menu item
+    	if(item.getItemId() == ID_MENU_EXIT)
+    	{
+    		//close the Activity
+    		this.finish();
+    		return true;
+    	}
+    	return false;
+    }
+
+
+
+
+
+
+ @Override
+	public boolean onCreateOptionsMenu(Menu menu)
+	{
+	    //the menu option text is defined in resources
+	 
+	    //get a SubMenu reference
+	    SubMenu sm = menu.addSubMenu("About...");
+	    //add menu items to the submenu
+	    sm.add(" ÿ»Ìﬁ ﬁ‰«… «· ·›“ÌÊ‰ «· —»ÊÌ");
+	    sm.add("«·„’„„ «Õ„œ «·Õ·Ì");
+	    sm.add("Email:ahmedalhily@gmail.com");
+	 
+	    //it is better to use final variables for IDs than constant values
+	    //menu.add(Menu.NONE,1,Menu.NONE,"Exit");
+	 
+	    //get the MenuItem reference
+	    MenuItem item = 
+	    	menu.add(Menu.NONE,ID_MENU_EXIT,Menu.NONE,R.string.exitOption);
+	    //set the shortcut
+	    item.setShortcut('5', 'x');
+	 
+	    //the menu option text is defined as constant String
+
+	 
+	    return true;
+	}
+
+
+
+
+
+    <string name="exitOption">Exit</string>
+    <string name="aboutOption">About</string>
+
